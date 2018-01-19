@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>添加商品页</title>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/addgood.css"/>
+		<script type="text/javascript" src="/javascripts/jquery.min.js" ></script>
+	</head>
+	<body>
+		<div class="add_nav">
+			<ul class="nav">
+				<li class="hover">通用信息</li>
+				<li>详细描述</li>
+				<li>其他信息</li>
+			</ul>
+		</div>
+		<div class="add_center">
+			<!--通用信息-->
+			<div class="up">
+				<p>商品名称：<input type="text" id="goods_name" value="" /><input type="color" name="" id="colorInp" /><i class="star">*</i></p>
+				<p>商品货号：<input type="text" id="goods_number" value="" /></p>
+				<p>商品分类：<input type="text" name="like" id="" value="" list="goods"/><i class="star">*</i>
+				<datalist id="goods">
+					<option value="钻石"></option>
+					<option value="&nbsp;&nbsp;&nbsp;&nbsp;裤子"></option>
+					<option value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;休闲裤"></option>
+					<option value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;休闲短裤"></option>
+					<option value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牛仔裤"></option>
+					<option value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;西裤"></option>
+					<option value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牛仔中裤"></option>
+					<option value="&nbsp;&nbsp;&nbsp;&nbsp;衬衫"></option>
+				</datalist>
+				</p>
+				<p>扩展分类：<input type="button" name="" id="" value="添加" /></p>
+				<p>商品品牌：<input type="text" name="" id="" value="" list="brand"/>
+				<datalist id="brand">
+					<option value="KK"></option>
+					<option value="溢彩年华"></option>
+					<option value="EVENY"></option>
+					<option value="圣迪奥"></option>
+					<option value="韩都衣舍"></option>
+				</datalist>
+				</p>
+				<p>本店售价：<input type="text" name="" id="goods_price" /><input type="button" value="按市场价计算" /><i class="star">*</i></p>
+				<p>虚拟销量：<input type="text" name="" id="" value="" /></p>
+				<p>上传商品图片：<input type="file" name="" id="img" value="" /></p>
+				<p><input type="button" name="" id="" value="确定" onclick="upload()"/><input type="button" name="" id="" value="重置" /></p>
+			</div>
+			<!--详细描述-->
+			<div>
+				<textarea name="" rows="" cols="">文本域</textarea>
+			</div>
+			<!--其他信息-->
+			<div>
+				<div class="up">
+					<p>
+						商品重量：<input type="text" name="" id="" value="" />
+						<input type="text" name="" id="kg" value="千克" list="kg"/>
+						<datalist id="kg">
+							<option value="克"></option>
+							<option value="千克"></option>
+						</datalist>
+					</p>
+					<p>商品库存量：<input type="text" name="" id="" value="" /></p>
+					<p>库存警告量：<input type="text" name="" id="" value="" /></p>
+					<p>
+						加入推荐：<input type="checkbox" name="" id="" value="" />
+						<input type="checkbox" name="" id="" value="" />
+						<input type="checkbox" name="" id="" value="" />
+					</p>
+					<p>上架：<input type="checkbox" name="" id="" checked="checked" />打钩表示允许销售，否侧不允许销售</p>
+					<p>能作为普通商品销售：<input type="checkbox" name="" id="" value="" checked="checked"/></p>
+					<p>是否为免运费商品：<input type="checkbox" name="" id="" value="" />打钩表示此商品不会产生运费，否则按正常运费计算</p>
+					<p>商品关键词：<input type="text" name="" id="" value="" />用空格分隔</p>
+					<p>商品简单描述：<textarea name="" rows="" cols=""></textarea></p>
+					<p>商家备注：<textarea name="" rows="" cols=""></textarea></p>
+					<p><input type="button" name="" id="" value="确定" /><input type="button" name="" id="" value="重置" /></p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//切换选项卡
+		$('.nav li').click(function(){
+			$(this).addClass('hover').siblings().removeClass("hover");
+			$('.add_center').children().eq($(this).index()).show().siblings().hide();
+		})
+		//上传
+		function upload() {
+			var form = new FormData();
+			form.append("goods_name", document.getElementById("goods_name").value);
+			form.append("goods_price", document.getElementById("goods_price").value);
+			form.append("goods_number", document.getElementById("goods_number").value);
+			form.append("img", document.getElementById("img").files[0]);
+			form.append("keys", 1);
+	
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "/api/addgoods_upload");
+			xhr.onreadystatechange = function(res){
+				if (xhr.readyState==4 && xhr.status==200) {
+					console.log(xhr.responseText);
+					var res = JSON.parse(xhr.responseText);
+					alert(res.message);
+				}
+			}
+			xhr.send(form);
+	}
+	</script>
+</html>

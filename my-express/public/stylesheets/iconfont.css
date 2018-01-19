@@ -1,0 +1,21 @@
+
+@font-face {font-family: "iconfont";
+  src:
+  url('/font/iconfont.ttf') format('truetype'), 
+  url('/font/iconfont.woff') format('woff');
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zhucedengluyanzhengma:before { content: "\e628"; }
+
+.icon-denglushimima:before { content: "\e642"; }
+
+.icon-denglu:before { content: "\e611"; }
+
